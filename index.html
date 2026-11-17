@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Location Sharing</title>
+</head>
+<body style="font-family:Arial;text-align:center;padding:30px">
+
+<h2>Location Sharing</h2>
+
+<p>
+अपनी वर्तमान GPS Location साझा करने के लिए नीचे बटन दबाएँ।
+आपकी अनुमति के बिना लोकेशन प्राप्त नहीं होगी।
+</p>
+
+<button onclick="getLocation()">
+Share My Location
+</button>
+
+<p id="result"></p>
+
+<script>
+function getLocation() {
+  const result = document.getElementById("result");
+
+  if (!navigator.geolocation) {
+    result.innerText = "Location support उपलब्ध नहीं है।";
+    return;
+  }
+
+  result.innerText = "आपकी अनुमति का इंतजार है...";
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      result.innerHTML =
+        "Latitude: " + lat +
+        "<br>Longitude: " + lon +
+        '<br><a target="_blank" href="https://www.google.com/maps?q='
+        + lat + ',' + lon + '">Open Google Maps</a>';
+    },
+    function() {
+      result.innerText =
+        "Location नहीं मिली। कृपया Permission जाँचें।";
+    }
+  );
+}
+</script>
+
+</body>
+</html>
